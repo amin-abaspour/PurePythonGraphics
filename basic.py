@@ -87,3 +87,16 @@ def horizontal_stripes(width, height, stripe_height, color1, color2):
 # save_bmp("checkerboard.bmp", rgb_matrix_to_bmp(checkerboard(400, 400, 40, (255, 255, 255), (0, 0, 0))))
 # save_bmp("horizontal_stripes.bmp", rgb_matrix_to_bmp(horizontal_stripes(400, 400, 40, (255, 0, 0), (0, 0, 255))))
 
+import math
+def circular_gradient(width, height, center, inner_color, outer_color, radius):
+    cx, cy = center
+    def interpolate_color(distance):
+        ratio = min(distance / radius, 1.0)
+        return tuple(int(inner_color[i] + (outer_color[i] - inner_color[i]) * ratio) for i in range(3))
+    def pixel_color(x, y):
+        distance = math.sqrt((x - cx)**2 + (y - cy)**2)
+        return interpolate_color(distance)
+    return [[pixel_color(x, y) for x in range(width)] for y in range(height)]
+
+save_bmp("circular_gradient.bmp", rgb_matrix_to_bmp(circular_gradient(400, 400, (200, 200), (255, 255, 255), (0, 0, 0), 200)))
+
