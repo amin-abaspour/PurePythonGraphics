@@ -1,14 +1,17 @@
-from image import rgb_matrix_to_bmp, save_bmp
+
+from bmp import rgb_matrix_to_bmp, save_bmp
+from mathematics import degree_to_radian, sine, cosine
+
 import math
 
 def cartesian_stripes(width, height, stripe_size, color1, color2, angle=0):
     rgb_matrix = []
-    angle_rad = math.radians(angle)  # Convert angle to radians
+    angle_rad = degree_to_radian(angle)  # Convert angle to radians
     for y in range(height):
         row = []
         for x in range(width):
             # Calculate the distance along the direction of the angle
-            stripe_index = int((x * math.cos(angle_rad) + y * math.sin(angle_rad)) / stripe_size)
+            stripe_index = int((x * cosine(angle_rad) + y * sine(angle_rad)) / stripe_size)
             current_color = color1 if stripe_index % 2 == 0 else color2
             row.append(current_color)
         rgb_matrix.append(row)
@@ -130,4 +133,4 @@ def checkerboard(width, height, cell_size, color1, color2):
             row.append(current_color)
         rgb_matrix.append(row)
     return rgb_matrix
-save_bmp("./output/checkerboard.bmp", rgb_matrix_to_bmp(checkerboard(400, 400, 20, (255, 255, 255), (0, 0, 0))))
+# save_bmp("./output/checkerboard.bmp", rgb_matrix_to_bmp(checkerboard(400, 400, 20, (255, 255, 255), (0, 0, 0))))
